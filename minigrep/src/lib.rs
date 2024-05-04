@@ -20,13 +20,35 @@ impl Config {
 
       Ok(Config { query, filename, case_sensitive })
   }
+
+  // New constructor that takes ownership of the iterator
+  pub fn newIterator(mut args: env::Args) -> Result<Config, &'static str> {
+    args.next();
+
+    // Iterator::next to find the query string
+    let query = match args.next(){
+      Some(arg) => arg,
+      None => return Err("Didn't get a query string"),
+    };
+
+    // Iterator::next to find the filename string
+    let filename = match args.next(){
+      Some(arg) => arg,
+      None => return Err("Didn't get a filename string"),
+    };
+    
+
+    let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
+
+    Ok(Config { query, filename, case_sensitive })
+}
 }
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
   let contents = fs::read_to_string(config.filename)?;
   
   let results = if config.case_sensitive {
-    search(&config.query, &contents)
+    searchIterator(&config.query, &contents)
   } else {
     search_case_insensitive(&config.query, &contents)
   };
@@ -48,6 +70,14 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
   }
 
   results
+}
+
+// Use Iterator to search
+pub fn searchIterator<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+  contents
+    .lines()
+    .filter(|line| line.contains(query))
+    .collect()
 }
 
 pub fn search_case_insensitive<'a>(
