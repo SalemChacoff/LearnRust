@@ -22,10 +22,8 @@ jobs:
         with:
           persist-credentials: false
       - name: Build
-        run: |
-          cd LearnRust
+        run:
           echo $(ls)
       - name: Run tests
-        run: |
-          cd LearnRust
+        run:
           echo $(pwd)
