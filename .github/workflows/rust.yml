@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [traits, guessing_game]
+        project: [traits, guessing_game, minigrep]
         
     steps:
       - uses: actions/checkout@v4
