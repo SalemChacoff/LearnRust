@@ -15,17 +15,15 @@ jobs:
     strategy:
       matrix:
         project: [adder, closure]
-    
+        
     steps:
       - uses: actions/checkout@v4
         if: github.event_name != 'pull_request'
       - name: Build
         run: |
           echo $(ls)
-          cd LearnRust/${{ matrix.project }}
-          cargo build --verbose
+          cd LearnRust
       - name: Run tests
         run: |
-          cd LearnRust/${{ matrix.project }}
+          cd LearnRust
           echo $(pwd)
-          cargo test --verbose
