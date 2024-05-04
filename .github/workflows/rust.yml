@@ -18,7 +18,7 @@ jobs:
         
     steps:
       - uses: actions/checkout@v4
-      - name: Install latest nightly
+      - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
             toolchain: stable
@@ -27,8 +27,8 @@ jobs:
       - name: Build
         run: |
           cd ${{ matrix.project }}
-          cargo build --verbose
+          cargo build
       - name: Run tests
         run: |
           cd ${{ matrix.project }}
-          cargo test --verbose
+          cargo test
