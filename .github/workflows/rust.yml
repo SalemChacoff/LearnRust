@@ -18,11 +18,10 @@ jobs:
         
     steps:
       - uses: actions/checkout@v4
-        if: github.event_name != 'pull_request'
       - name: Build
         run: |
-          echo $(ls)
           cd LearnRust
+          echo $(ls)
       - name: Run tests
         run: |
           cd LearnRust
