@@ -23,10 +23,10 @@ jobs:
         with:
           persist-credentials: false
       - name: Build
-        run:
+        run: |
           cd ${{ matrix.project }}
           cargo build --verbose
       - name: Run tests
-        run:
+        run: |
           cd ${{ matrix.project }}
           cargo test --verbose
